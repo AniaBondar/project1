@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block body %}
+    <h1>Search</h1>
+
+    <form action="{{ url_for('searched') }}" method="post">
+        <div class="form-group">
+             <input class="form-control" type="text" name="s" placeholder="Search">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    <h2>Results:</h2>
+
+    <ul>
+        {% for result in results %}
+            <li><a href={{ url_for('book',isbn=result.isbn) }}>{{ result.isbn }} {{ result.author }} "{{ result.title }}"</a></li>
+        {% else %}
+            No books found!
+        {% endfor %}
+    </ul>
+    <footer class="col-3"><a href={{ url_for('log_out') }}>
+        <h5>
+        {% if session["user_id"] == "": %}
+            Log in
+        
+        {% else: %}
+            Log out
+        {% endif %}
+        </h5>
+        <a></footer>
+{% endblock %}

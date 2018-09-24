@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ info.title }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ info.title }}</h1>
+
+    <h3>Info:</h3>
+
+    <ul>
+        <li>Title: {{ info.title }}</li>
+        <li>Author: {{ info.author }}</li>
+        <li>ISBN: {{ info.isbn }}</li>
+        <li>Publication year: {{ info.year }}</li>
+    </ul>
+
+    <h3>Info from Goodreads:</h3>
+
+    <ul>
+        <li>Average rating: {{ res.json().books[0].average_rating }}</li>
+        <li>The number of ratings: {{ res.json().books[0].work_ratings_count }}</li>
+    </ul>
+
+
+    <h3>Reviews:</h3>
+    <ul>
+        {% for review in reviews %}
+            <li>{{ review.rating }}/5 {{ review.text }}</li>
+        {% else %}
+            No reviews found!
+        {% endfor %}
+    </ul>
+
+    <h3>Add a review</h3>
+
+    <form action="{{ url_for('add_rev',isbn=info.isbn) }}" method="post">
+
+        <select class="form-control" name="rating">
+                {% for i in range(1,6) %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+        </select>
+
+        <div class="form-group">
+             <input class="form-control" type="text" name="text" placeholder="Text">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary">Add a review</button>
+        </div>
+
+    </form>
+{% endblock %}
