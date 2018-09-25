@@ -46,7 +46,7 @@ def registered():
     db.commit()
     users = db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).fetchone();
     session["user_id"] = users.user_id
-    return render_template("success.html", message="registered in")
+    return render_template("success.html", message="registered")
 
 @app.route("/log_in", methods=["POST"])
 def log_in():
